@@ -1,0 +1,192 @@
+:root {
+    --sidepad : 16px
+}
+/* set the font family to a font stored on disk */
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./montserrat-font/MontserratBlack-3zOvZ.woff') format('woff');
+}
+
+body {
+    background-color: #0e4600;
+}
+
+
+/* center an image */
+/* then place it a qaurter of the way down the screen */
+/* make sure it's scaled to 25% */
+/* then center it */
+/* then place it a quarter of the way down the screen */
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    margin-top: 25%;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -o-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    transition: width .5s ease;
+}
+/* make the image smaller when it becomes active */
+.center:active {
+    -webkit-transform: scale(.90);
+    -moz-transform: scale(.90);
+    -o-transform: scale(.90);
+    -ms-transform: scale(.90);
+    transform: scale(.90);
+}
+
+.count {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff;
+    font-family: 'Montserrat';
+}
+
+/* center the button and make it look nice */
+
+.button {
+    background-color: #137000; /* Green */
+    border: none;
+    font-family: "Montserrat";
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.button:hover {
+    background-color: #116800;
+}
+.button:active {
+    background-color: #0f5c00;
+}
+
+
+/* snackbar css */
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    /* min-width: 250px; /* Set a default minimum width */
+    /* margin-left: -125px; Divide value of min-width by 2 */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    font-family: "Montserrat";
+    padding-left : var(--sidepad);
+    padding-right : var(--sidepad);
+    position: fixed; /* Sit on top of the screen */
+    /* left: 50%; Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+    font-size: 0.9em;
+  }
+  
+  /* Show the snackbar when clicking on a button (class added with JavaScript) */
+  #snackbar.showError {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+    However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    background-color: tomato;
+  }
+    #snackbar.showSuccess {
+        visibility: visible; /* Show the snackbar */
+        /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+        However, delay the fade out process for 2.5 seconds */
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        background-color: green;
+    }
+    #snackbar.showReward {
+        visibility: visible; /* Show the snackbar */
+        /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+        However, delay the fade out process for 2.5 seconds */
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        background-color: gold;
+    }
+#snackbar.Info {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+    However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    background-color: #ffd000;
+}
+  
+  /* Animations to fade the snackbar in and out */
+  @-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+  }
+
+.button.purchase {
+    background-color: #EDEEC0; /* Green */
+    border: none;
+    font-family: "Montserrat";
+    color: #0D1821;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.button.purchase:hover {
+    background-color: #E6E5B9;
+}
+.button.purchase:active {
+    background-color: #d4d4ac;
+}
+.item-wrapper {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: "Montserrat";
+    font-size: 1.5em;
+    color: white;
+    padding: 0px;
+    margin: 0px;
+}
+
+.gold {
+    color: gold;
+    font-family: "Montserrat";
+    font-size: 1.5em;
+}
+/* create a grey text class */
+.grey {
+    color: #fff;
+    font-family: "Montserrat";
+    font-size: 1.5em;
+}
+/* create a description text class */
+.description {
+    color: #fff;
+    font-family: "Montserrat";
+    font-size: 0.75em;
+}

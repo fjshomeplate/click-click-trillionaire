@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- import alpinejs from cdn -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" crossorigin="anonymous"></script>
+    <!-- link main.css -->
+    <link rel="stylesheet" href="css/main.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- use the icon image -->
+    <link rel="icon" href="css/Dollasign.png">
+    <title>ClickClickTrillionaire!</title>
+</head>
+<body x-data="init()">
+    <div x-show="!store && !showAcheviements" x-transition.duration1000ms>
+        <div>
+            <img src="https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/071c1ec02eadf05.png" x-on:click="increase" class="center">
+        </div>
+
+        <!-- create a paragraph that displays the count variable with the x-text directive-->
+        <p class="count">$<span x-text="addCommas(count)"></span></p>
+        <!-- button for entering store -->
+        <button class="store button" x-on:click="storeToggle">Shop</button>
+    </br>
+    <!-- button to enter acheviements section -->
+    <button class="achievements button" x-on:click="acheviementsToggle()">View Achievements</button>
+    </div>
+    <div x-show="store && !showAcheviements" x-transition.duration1000ms>
+        <!-- for each element in the powerUp, show it's name and cost-->
+        <div>
+            <template x-for="powerUp in powerUps">
+                <div class="item-wrapper">
+                    <p x-text="powerUp.name"><p>
+                    <button x-on:click="purchase(powerUp)" class="button purchase">$<span x-text="addCommas(powerUp.cost)"></span></button>
+                </div>
+            </template>
+        </div>
+       <button x-on:click="storeToggle" class="button">Exit the Shop</button>
+       <br/>
+    </div>
+    <!-- create an acheviements page -->
+    <div x-show="showAcheviements && !store">
+        <!-- for each element in acheivements, show its name, requirements, and a redeem button-->
+        <template x-for="acheviement in acheviements">
+            <div class="item-wrapper">
+                <!-- if the acheviement is completed, display the name with the gold class -->
+                <div x-show="acheviement.hasAcheviement">
+                    <p x-text="acheviement.name" class="gold"></p>
+                    <p x-text="acheviement.description" class="description"></p>
+                </div>
+                <!-- if the acheviement is not completed, display the name with the grey class -->
+                <div x-show="!acheviement.hasAcheviement">
+                    <p x-text="acheviement.name" class="grey"></p>
+                    <p x-text="acheviement.description" class="description"></p>
+                </div>
+                <button x-on:click="rewardAcheviement(acheviement)" x-show="!acheviement.hasAcheviement" class="button purchase">Redeem</button>
+            </div>
+        </template>
+        <br />
+        <button x-on:click="acheviementsToggle()" class="button">Back to the Game</button>
+    </div>
+    <!-- the snackbar stuff -->
+    <div id="wrapper">
+
+        <div id="snackbar">
+            <h2 style="color:white" x-text="snackbarText"></h2>
+        </div>
+    </div> 
+</body>
+<script>
+// create a function that initializes the count variable
+function init() {
+return {
+    count: 0,
+    moneyPerClick : 1,
+    store : false,
+    snackbarText : "",
+    showAcheviements : false,
+    //create an acheviements array
+    acheviements : [
+        {
+            name : "Click Click Click",
+            description : "Collect Ten Dollars",
+            count : 0,
+            requirement : 10,
+            reward : 10,
+            hasAcheviement : false,
+        },
+        {
+            name : "Pocket Money",
+            description : "Collect One Hundred Dollars",
+            requirement : 100,
+            reward : 99, 
+            hasAcheviement : false,
+        },
+        {
+            name : "Payin the Rent",
+            description : "Collect One Thousand Dollars",
+            requirement : 1000,
+            reward : 999,
+            hasAcheviement : false,
+        },
+        {
+            name : "Big Money",
+            description : "Collect Ten Thousand Dollars",
+            requirement : 10000,
+            reward : 9999,
+            hasAcheviement : false,
+        },
+        {
+            name : "Bigger Money",
+            description : "Collect One Hundred Thousand Dollars",
+            requirement : 100000,
+            reward : 999999,
+            hasAcheviement : false,
+        },
+        {
+            name : "Biggest Money",
+            description : "Collect One Million Dollars",
+            requirement : 1000000,
+            reward : 9999999,
+            hasAcheviement : false,
+        },
+        {
+            name : "Biggestest Money",
+            description : "Collect One Billion Dollars",
+            requirement : 10000000,
+            reward : 99999999,
+            hasAcheviement : false,
+        },
+        {
+            name : "Biggestestest Money",
+            description : "Collect One Trillion Dollars",
+            requirement : 100000000,
+            reward : 999999999,
+            hasAcheviement : false,
+        },
+        {
+            name : "Biggestestestest Money",
+            description : "Collect One Quadrillion Dollars",
+            requirement : 1000000000,
+            reward : 9999999999,
+            hasAcheviement : false,
+        },
+        {
+            name : "Biggestestestestest Money",
+            description : "Collect One Quintillion Dollars",
+            requirement : 10000000000,
+            reward : 99999999999,
+            hasAcheviement : false,
+        },
+        {
+            name : "Biggestestestestestest Money",
+            description : "Collect One Sextillion Dollars",
+            requirement : 100000000000,
+            reward : 999999999999,
+            hasAcheviement : false,
+        },
+        {
+            name : "Biggestestestestestestest Money",
+            description : "Collect One Septillion Dollars",
+            requirement : 1000000000000,
+            reward : 9999999999999,
+            hasAcheviement : false,
+        },
+        {
+            name : "Biggestestestestestestest Money",
+            description : "Collect One Octillion Dollars",
+            requirement : 10000000000000,
+            reward : 99999999999999,
+            hasAcheviement : false,
+        },
+        {
+            name :"Sources",
+            description : "Thanks to all the people who made this game possible. The dollar bill image is from https://pixelartmaker-data-78746291193.nyc3.digitaloceanspaces.com/image/071c1ec02eadf05.png, thanks very much to the creator. Enjoy!",
+            requirement : 0,
+            reward : 0,
+            hasAcheviement : true,
+        }
+    ],
+    // create an array of power ups
+    powerUps : [
+        {
+            name : "Doubler",
+            cost : 100,
+            effect : function(mpc) {
+                return mpc * 2;
+            }
+        },
+        {
+            name : "Tripler",
+            cost : 1000,
+            effect : function(mpc) {
+                return mpc * 3;
+            }
+        },
+        {
+            name: "Quadrupler",
+            cost : 10000,
+            effect : function(mpc) {
+                return mpc * 4;
+            }
+        },
+        {
+            name: "Scratch Ticket",
+            cost: 5,
+            effect : function() {
+                //fill a list with scratch ticket winning options
+                let options = [1,5,10,20,50,100,1000,10000,100000,100000000]
+                //create a list of weights for each option
+                //final options
+                var finalOptions = []
+                let weights = [1000,9,8,7,6,5,4,3,2,1,0.0001]
+                options.map((option, index) => {
+                    // for(var x; x < weights[index]; x++) {
+                    //     finalOptions += option;
+                    //     console.log(finalOptions);
+                    // }
+                    //for each option, get its weight, and then add it to the final options that weight times
+                    for(var x = 0; x<weights[index]; x++) {
+                        finalOptions.push(option);
+                    }
+                });
+                // generate a random number between 1 and 10 to be the number of the scratch ticket
+                let scratchTicket = Math.floor(Math.random() * finalOptions.length) + 1;
+                // if the number is 1, then add a random number between 1 and 100000 to the count variable
+                let index = Math.floor(Math.random() * finalOptions.length);
+                if(scratchTicket != 10) {
+                    return finalOptions[index];
+                } else {
+                    return 0;
+                }
+            }
+        }
+    ],
+    // creat a function that activates the snackbar
+    activateSnackbar : function(type) {
+        document.getElementById("snackbar").classList.add("show"+type);
+        setTimeout(function(){ document.getElementById("snackbar").classList.remove("show"+type); }, 3000);
+    },
+    //create a function that increases the count variable by the moneyPerClick variable  
+    increase: function() {
+        this.count += this.moneyPerClick;
+    }, 
+    //create a function that adds commas to the count variable
+    addCommas: function(toAdd) {
+        let x = toAdd.toString();
+        return x.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    //create a function that toggles the value of the variable store
+    storeToggle: function() {
+        this.store = !this.store;
+    },
+    grabObject : function(objectName) {
+        const obj = this.powerUps.find(obj => obj.name === objectName);
+    },
+    purchase:function(powerUp) {
+        // if the count variable is greater than or equal to the cost of the power up
+        if (this.count >= powerUp.cost && powerUp.name !== "Scratch Ticket") {
+            // subtract the cost of the power up from the count variable
+            this.count -= powerUp.cost;
+            // run the effect function of the power up
+            this.moneyPerClick = powerUp.effect(this.moneyPerClick);
+            //show the snackbar
+            this.snackbarText = "You bought " + powerUp.name + " for $" + this.addCommas(powerUp.cost);
+            powerUp.cost *= 100;
+            this.activateSnackbar("Success");
+        } else if(powerUp.name === "Scratch Ticket" && this.count >= powerUp.cost) {
+            // subtract the cost of the power up from the count variable
+            this.count -= powerUp.cost;
+            // run the effect function of the power up
+            let result = powerUp.effect();
+            this.count += result;
+            // check if result is bigger than 0, and if it is, change the snackbar text to "You won a scratch ticket!"
+            if (result > 0) {
+                this.snackbarText = "You have a winning scratch ticket! You won $"+ this.addCommas(result);
+                this.activateSnackbar("Success");
+            } else {
+                this.snackbarText = "You bought a scratch ticket! But it wasn't a winner.";
+                this.activateSnackbar("Info")
+            }
+        }
+        else {
+            // if the count variable is less than the cost of the power up, alert the user that they don't have enough money
+            this.snackbarText="Sorry, you can't afford that."
+            // activate the snackbar
+            this.activateSnackbar("Error")
+        }
+    },
+    acheviementsToggle() {
+        this.showAcheviements = !this.showAcheviements;
+    },        
+    rewardAcheviement:function(acheviement) {
+        // if the count variable is greater than or equal to the requirement of the acheviement
+        if (this.count >= acheviement.requirement && !acheviement.hasAcheviement) {
+            // add the reward of the acheviement to the count variable
+            this.count += acheviement.reward;
+            // set the hasAcheviement variable to true
+            acheviement.hasAcheviement = true;
+            // show the snackbar
+            this.snackbarText = "You have earned the " + acheviement.name + " achievement!";
+            this.activateSnackbar("Reward");
+        } else {
+            // if the count variable is less than the requirement of the acheviement, alert the user that they don't have enough money
+            this.snackbarText="Sorry, you can't earn that."
+            // activate the snackbar
+            this.activateSnackbar("Error")
+        }
+    },
+}
+}
+</script>
+</html>
